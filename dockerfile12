@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
 
 # Copy the entire django_project directory into the container
 #COPY django_project /app/django_project
-cp -r db.sqlite3 djangoapp djangoproject manage.py requirements.txt static templates /app/
+COPY -r db.sqlite3 djangoapp djangoproject manage.py requirements.txt static templates /app/
 
 
 # Navigate to the django_project directory
