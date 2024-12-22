@@ -1,0 +1,38 @@
+# Base image
+FROM python:3.10-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Set the working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    python3-venv \
+    libmariadb-dev-compat \
+    libmariadb-dev \
+    pkg-config \
+    python3-dev \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy the entire django_project directory into the container
+#COPY django_project /app/django_project
+cp -r db.sqlite3 djangoapp djangoproject manage.py requirements.txt static templates /app/
+
+
+# Navigate to the django_project directory
+WORKDIR /app/
+
+# Create and install the virtual environment inside the django_project folder
+RUN python3 -m venv venv && \
+    venv/bin/pip install --upgrade pip && \
+    venv/bin/pip install -r requirements.txt
+
+# Expose the port
+EXPOSE 8000
+
+# Set the default command to keep the container running
+CMD ["sh", "-c", "tail -f /dev/null"]

@@ -1,0 +1,11 @@
+FROM mysql:8.0.11
+
+ENV MYSQL_ROOT_PASSWORD=lenka
+
+ENV MYSQL_DATABASE=userdb
+
+ENV MYSQL_user=admin
+
+ENV MYSQL_PASSWORD=12345
+
+VOLUME /var/lib/mysql
